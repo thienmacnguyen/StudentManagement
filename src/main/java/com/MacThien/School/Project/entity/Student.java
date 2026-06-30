@@ -1,7 +1,7 @@
-package com.MacThien.School.Project.Entity;
+package com.MacThien.School.Project.entity;
 
-import com.MacThien.School.Project.Enum.Gender;
-import com.MacThien.School.Project.Enum.Status;
+import com.MacThien.School.Project.enums.Gender;
+import com.MacThien.School.Project.enums.Status;
 import jakarta.persistence.*; // Các annotation của JPA
 import lombok.*; // Các annotation của Lombok
 import org.hibernate.annotations.CreationTimestamp; // Tự động điền thời gian tạo

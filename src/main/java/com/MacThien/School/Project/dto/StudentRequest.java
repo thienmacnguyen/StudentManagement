@@ -1,5 +1,5 @@
 package com.MacThien.School.Project.dto;
-import com.MacThien.School.Project.Enum.Gender;
+import com.MacThien.School.Project.enums.Gender;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 

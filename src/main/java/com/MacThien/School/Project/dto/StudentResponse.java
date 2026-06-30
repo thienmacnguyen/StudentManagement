@@ -1,7 +1,7 @@
 package com.MacThien.School.Project.dto;
 
-import com.MacThien.School.Project.Enum.Gender;
-import com.MacThien.School.Project.Enum.Status;
+import com.MacThien.School.Project.enums.Gender;
+import com.MacThien.School.Project.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Builder;
@@ -21,6 +21,7 @@ public class StudentResponse {
     private Gender gender;
     private LocalDate birthday;
     private String email;
+    private String phone;
     private String address;
     private Status status;
     private LocalDateTime createdAt;

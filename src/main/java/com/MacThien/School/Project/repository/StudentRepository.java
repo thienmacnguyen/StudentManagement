@@ -1,6 +1,6 @@
-package com.MacThien.School.Project.Repository;
-import com.MacThien.School.Project.Entity.Student;
-import com.MacThien.School.Project.Enum.Status;
+package com.MacThien.School.Project.repository;
+import com.MacThien.School.Project.entity.Student;
+import com.MacThien.School.Project.enums.Status;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

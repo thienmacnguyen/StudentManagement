@@ -1,4 +1,4 @@
-package com.MacThien.School.Project.Enum;
+package com.MacThien.School.Project.enums;
     public enum Gender {
         MALE, FEMALE, OTHER
     }
