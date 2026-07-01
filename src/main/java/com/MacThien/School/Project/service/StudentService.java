@@ -7,15 +7,17 @@ import com.MacThien.School.Project.repository.StudentRepository;
 import com.MacThien.School.Project.dto.StudentRequest;
 import com.MacThien.School.Project.dto.StudentResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class StudentService {
 
-    private static final StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
 
-    public static StudentResponse createStudent(StudentRequest request) {
+    public StudentResponse createStudent(StudentRequest request) {
         if (studentRepository.existsByStudentCode(request.getStudentCode())) {
             throw new RuntimeException("Mã sinh viên đã tồn tại");
         }
@@ -33,10 +35,10 @@ public class StudentService {
                 .status(Status.ACTIVE)
                 .build();
 
-        Student savedStudent = StudentRepository.save(student);
+        Student savedStudent = studentRepository.save(student);
         return mapToResponse(savedStudent);
     }
-    private static StudentResponse mapToResponse(Student student) {
+    private StudentResponse mapToResponse(Student student) {
             return StudentResponse.builder()
                 .id(student.getId())
                 .studentCode(student.getStudentCode())
@@ -52,7 +54,41 @@ public class StudentService {
                 .build();
     }
 
-    public StudentResponse updateStudent() {
-        return null;
+    public StudentResponse updateStudent(Long id, StudentRequest request) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy id" + id));
+
+        if (studentRepository.existsByEmailAndIdNot(request.getEmail(), id)) {
+            throw new RuntimeException("Email đã được dùng bởi sinh viên khác");
+        }
+
+        // .student.setStudentCode(getStudentCode());
+        student.setFullName(student.getStudentCode());
+        student.setGender(student.getGender());
+        student.setBirthday(student.getBirthday());
+        student.setEmail(student.getEmail());
+        student.setPhone(student.getPhone());
+        student.setAddress(student.getAddress());
+
+        Student updatedStudent = studentRepository.save(student);
+                return mapToResponse(updatedStudent);
+    }
+
+    public void softDeleteStudent (long id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy id" + id));
+        student.setStatus(Status.INACTIVE);
+        studentRepository.save(student);
+    }
+
+    public StudentResponse getStudentByID(Long id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy id" + id));
+        return mapToResponse(student);
+    }
+
+    public Page<StudentResponse> searchStudents(String keyword, Status status, Pageable pageable) {
+        Page<Student> students = studentRepository.searchStudents(keyword, status, pageable);
+        return students.map(this::mapToResponse);
     }
 }
