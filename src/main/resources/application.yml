@@ -1,22 +1,16 @@
 server:
-  port: 8080 # C?ng ?ng d?ng s? ch?y
+  port: 8081
 
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/school_management?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-    username: root # Tên user MySQL c?a b?n (th??ng là root)
-    password: root # M?t kh?u MySQL c?a b?n
+    username: root
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update # Hibernate s? t? ??ng t?o/c?p nh?t b?ng d?a trên Entity. Dùng "update" khi ?ang phát tri?n, sau này có th? ??i thành "none" ho?c "validate".
-    show-sql: true # Hi?n th? các câu l?nh SQL mà JPA t?o ra trong console
+      ddl-auto: update
+    show-sql: true
     properties:
       hibernate:
-        format_sql: true # ??nh d?ng SQL cho d? ??c
-
-springdoc: # C?u hình cho Swagger/OpenAPI
-  api-docs:
-    path: /api-docs
-  swagger-ui:
-    path: /swagger-ui.html
+        format_sql: true

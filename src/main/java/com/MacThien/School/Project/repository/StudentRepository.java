@@ -23,3 +23,4 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
             " AND (:status IS NULL OR s.status = :status)")
     Page<Student> searchStudents(@Param("keyword") String keyword, @Param("status") Status status, Pageable pageable);
 }
+
