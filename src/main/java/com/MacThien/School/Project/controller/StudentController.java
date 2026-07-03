@@ -44,7 +44,7 @@ public class StudentController {
     @GetMapping
     public ResponseEntity<Page<StudentResponse>> getStudents(
             @RequestParam (required = false) String keyword,
-            @RequestParam (required = false) Status status,
+            @RequestParam (defaultValue = "ACTIVE") Status status,
             @RequestParam (defaultValue = "0") int page,
             @RequestParam (defaultValue = "10") int size,
             @RequestParam (defaultValue = "id") String sortBy,

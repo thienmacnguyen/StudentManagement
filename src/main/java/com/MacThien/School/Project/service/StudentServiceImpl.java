@@ -63,12 +63,12 @@ public class StudentServiceImpl implements StudentService {
         }
 
         // .student.setStudentCode(getStudentCode());
-        student.setFullName(student.getFullName());
-        student.setGender(student.getGender());
-        student.setBirthday(student.getBirthday());
-        student.setEmail(student.getEmail());
-        student.setPhone(student.getPhone());
-        student.setAddress(student.getAddress());
+        student.setFullName(request.getFullName());
+        student.setGender(request.getGender());
+        student.setBirthday(request.getBirthday());
+        student.setEmail(request.getEmail());
+        student.setPhone(request.getPhone());
+        student.setAddress(request.getAddress());
 
         Student updatedStudent = studentRepository.save(student);
                 return mapToResponse(updatedStudent);
