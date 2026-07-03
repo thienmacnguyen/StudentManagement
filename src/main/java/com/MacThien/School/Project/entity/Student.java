@@ -35,7 +35,7 @@ public class Student {
 
     private LocalDate birthday; // Mặc định tên cột là birthday
 
-    @Column(nullable = false, unique = true, length = 100)
+    @Column(nullable = false, length = 100)
     private String email;
 
     @Column(length = 15)
