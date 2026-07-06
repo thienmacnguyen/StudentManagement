@@ -1,5 +1,6 @@
 package com.MacThien.School.Project.dto;
 import com.MacThien.School.Project.enums.Gender;
+import com.MacThien.School.Project.enums.Status;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -7,6 +8,7 @@ import java.time.LocalDate;
 
 @Data
 public class    StudentRequest {
+    public String getSortBy;
     @NotBlank(message = "Mã sinh viên không được để trống")
     @Size(max = 50, message = "Mã sinh viên không được dài quá 50 kỹ tự")
     private String studentCode;
@@ -28,4 +30,12 @@ public class    StudentRequest {
     private String phone;
 
     private String address;
+
+    private Status status = Status.ACTIVE;
+    private int page = 0;
+    private int size = 10;
+    private String sortBy = "id";
+    private String sortDir = "asc";
+
+    private String keyword;
 }

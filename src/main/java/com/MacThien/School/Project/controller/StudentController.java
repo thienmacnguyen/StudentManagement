@@ -41,7 +41,7 @@ public class StudentController {
         return ResponseEntity.ok(studentServiceImpl.getStudentByID(id));
     }
 
-    @GetMapping
+    @GetMapping("/v1")
     public ResponseEntity<Page<StudentResponse>> getStudents(
             @RequestParam (required = false) String keyword,
             @RequestParam (defaultValue = "ACTIVE") Status status,
@@ -53,5 +53,14 @@ public class StudentController {
                     Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
         return ResponseEntity.ok(studentServiceImpl.searchStudents(keyword, status, pageable));
+    }
+
+    @PostMapping("/v2")
+    public ResponseEntity<Page<StudentResponse>> getStudents(
+            @RequestBody StudentRequest request) {
+        Sort sort = request.getSortDir().equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+                Sort.by(request.getSortBy).ascending() : Sort.by(request.getSortBy).descending();
+        Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), sort);
+        return ResponseEntity.ok(studentServiceImpl.searchStudents(request.getKeyword(), request.getStatus(), pageable));
     }
 }
