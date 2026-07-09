@@ -26,4 +26,7 @@ public class StudentResponse {
     private Status status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private Long classID;
+
+
 }

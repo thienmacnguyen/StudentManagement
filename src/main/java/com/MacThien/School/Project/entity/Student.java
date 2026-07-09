@@ -54,4 +54,8 @@ public class Student {
     @UpdateTimestamp // Tự động điền thời gian khi đối tượng được cập nhật
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Column(name = "class_id")
+    private Long classID;
 }
+

@@ -6,6 +6,7 @@ import com.MacThien.School.Project.enums.Status;
 import com.MacThien.School.Project.repository.StudentRepository;
 import com.MacThien.School.Project.dto.StudentRequest;
 import com.MacThien.School.Project.dto.StudentResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,7 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
 
+    @Override
     public StudentResponse createStudent(StudentRequest request) {
         if (studentRepository.existsByStudentCode(request.getStudentCode())) {
             throw new RuntimeException("Mã sinh viên đã tồn tại");
@@ -24,36 +26,23 @@ public class StudentServiceImpl implements StudentService {
         if (studentRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email đã được sử dụng");
         }
-        Student student = Student.builder()
-                .studentCode(request.getStudentCode())
-                .fullName(request.getFullName())
-                .gender(request.getGender())
-                .birthday(request.getBirthday())
-                .email(request.getEmail())
-                .phone(request.getPhone())
-                .address(request.getAddress())
-                .status(Status.ACTIVE)
-                .build();
+        Student student = new Student();
+        student.setStudentCode(request.getStudentCode());
+        student.setFullName(request.getFullName());
+        student.setGender(request.getGender());
+        student.setBirthday(request.getBirthday());
+        student.setEmail(request.getEmail());
+        student.setPhone(request.getPhone());
+        student.setAddress(request.getAddress());
+        student.setStatus(Status.ACTIVE);
+        student.setClassID(request.getClassID());
+
 
         Student savedStudent = studentRepository.save(student);
         return mapToResponse(savedStudent);
     }
-    private StudentResponse mapToResponse(Student student) {
-            return StudentResponse.builder()
-                .id(student.getId())
-                .studentCode(student.getStudentCode())
-                .fullName(student.getFullName())
-                .gender(student.getGender())
-                .birthday(student.getBirthday())
-                .email(student.getEmail())
-                .phone(student.getPhone())
-                .address(student.getAddress())
-                .status(student.getStatus())
-                .createdAt(student.getCreatedAt())
-                .updatedAt(student.getUpdatedAt())
-                .build();
-    }
 
+    @Override
     public StudentResponse updateStudent(Long id, StudentRequest request) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy id" + id));
@@ -69,11 +58,13 @@ public class StudentServiceImpl implements StudentService {
         student.setEmail(request.getEmail());
         student.setPhone(request.getPhone());
         student.setAddress(request.getAddress());
+        student.setClassID(request.getClassID());
 
         Student updatedStudent = studentRepository.save(student);
                 return mapToResponse(updatedStudent);
     }
 
+    @Override
     public void softDeleteStudent (Long id) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy id" + id));
@@ -81,14 +72,34 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.save(student);
     }
 
+    @Override
     public StudentResponse getStudentByID(Long id) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy id" + id));
         return mapToResponse(student);
     }
 
+    @Override
     public Page<StudentResponse> searchStudents(String keyword, Status status, Pageable pageable) {
         Page<Student> students = studentRepository.searchStudents(keyword, status, pageable);
         return students.map(this::mapToResponse);
     }
+
+    private StudentResponse mapToResponse(Student student) {
+        return StudentResponse.builder()
+                .id(student.getId())
+                .studentCode(student.getStudentCode())
+                .fullName(student.getFullName())
+                .gender(student.getGender())
+                .birthday(student.getBirthday())
+                .email(student.getEmail())
+                .phone(student.getPhone())
+                .address(student.getAddress())
+                .status(student.getStatus())
+                .createdAt(student.getCreatedAt())
+                .updatedAt(student.getUpdatedAt())
+                .classID(student.getClassID())
+                .build();
+    }
+
 }

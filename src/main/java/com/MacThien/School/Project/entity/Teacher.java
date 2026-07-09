@@ -2,15 +2,20 @@ package com.MacThien.School.Project.entity;
 
 import com.MacThien.School.Project.enums.Degree;
 import com.MacThien.School.Project.enums.Department;
+import com.MacThien.School.Project.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.AnyDiscriminatorImplicitValues;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Teachers")
+@Table(name = "teachers")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -40,4 +45,15 @@ public class Teacher {
     @Column(nullable = false, length = 20)
     private Department department;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 15)
+    private Status status = Status.ACTIVE;
+
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }

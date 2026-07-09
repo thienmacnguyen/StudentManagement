@@ -3,7 +3,7 @@ package com.MacThien.School.Project.controller;
 import com.MacThien.School.Project.dto.StudentRequest;
 import com.MacThien.School.Project.dto.StudentResponse;
 import com.MacThien.School.Project.enums.Status;
-import com.MacThien.School.Project.service.StudentServiceImpl;
+import com.MacThien.School.Project.service.StudentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,27 +18,27 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/students")
 @RequiredArgsConstructor
 public class StudentController {
-    private final StudentServiceImpl studentServiceImpl;
+    private final StudentService studentService;
     @PostMapping
     public ResponseEntity<StudentResponse> createStudent(@Valid @RequestBody StudentRequest request) {
-        return new ResponseEntity<>(studentServiceImpl.createStudent(request), HttpStatus.CREATED);
+        return new ResponseEntity<>(studentService.createStudent(request), HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
     public ResponseEntity<StudentResponse> updateStudent(
             @PathVariable Long id,
             @Valid @RequestBody StudentRequest request
     ) {
-        return ResponseEntity.ok(studentServiceImpl.updateStudent(id, request));
+        return ResponseEntity.ok(studentService.updateStudent(id, request));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable Long id) {
-        studentServiceImpl.softDeleteStudent(id);
+        studentService.softDeleteStudent(id);
         return ResponseEntity.ok("Xóa mềm học sinh thành công");
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<StudentResponse> getStudentByID(@PathVariable Long id) {
-        return ResponseEntity.ok(studentServiceImpl.getStudentByID(id));
+        return ResponseEntity.ok(studentService.getStudentByID(id));
     }
 
     @GetMapping("/v1")
@@ -52,7 +52,7 @@ public class StudentController {
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
                     Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        return ResponseEntity.ok(studentServiceImpl.searchStudents(keyword, status, pageable));
+        return ResponseEntity.ok(studentService.searchStudents(keyword, status, pageable));
     }
 
     @PostMapping("/v2")
@@ -61,6 +61,6 @@ public class StudentController {
         Sort sort = request.getSortDir().equalsIgnoreCase(Sort.Direction.ASC.name()) ?
                 Sort.by(request.getSortBy).ascending() : Sort.by(request.getSortBy).descending();
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), sort);
-        return ResponseEntity.ok(studentServiceImpl.searchStudents(request.getKeyword(), request.getStatus(), pageable));
+        return ResponseEntity.ok(studentService.searchStudents(request.getKeyword(), request.getStatus(), pageable));
     }
 }

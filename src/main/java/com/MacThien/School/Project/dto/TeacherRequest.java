@@ -1,6 +1,7 @@
 package com.MacThien.School.Project.dto;
 import com.MacThien.School.Project.enums.Degree;
 import com.MacThien.School.Project.enums.Department;
+import com.MacThien.School.Project.enums.Status;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -22,6 +23,8 @@ public class TeacherRequest {
 
     @Pattern(regexp = "^\\+?[0-9]{9,15}$", message = "Số điện thoại không đúng định dạng")
     private String phone;
+
+    private Status status;
 
     @NotBlank(message = "Thông tin bằng không được để trống")
     private Degree degree;
