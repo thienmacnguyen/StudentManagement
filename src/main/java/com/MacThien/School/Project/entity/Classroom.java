@@ -1,6 +1,5 @@
 package com.MacThien.School.Project.entity;
 
-import com.MacThien.School.Project.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -27,10 +26,6 @@ public class Classroom {
 
     @Column(name = "homeroom_teacher_id", unique = true)
     private Long homeroomTeacherId;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 15)
-    private Status status = Status.ACTIVE;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

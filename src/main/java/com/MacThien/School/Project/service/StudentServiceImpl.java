@@ -6,7 +6,6 @@ import com.MacThien.School.Project.enums.Status;
 import com.MacThien.School.Project.repository.StudentRepository;
 import com.MacThien.School.Project.dto.StudentRequest;
 import com.MacThien.School.Project.dto.StudentResponse;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,7 +34,7 @@ public class StudentServiceImpl implements StudentService {
         student.setPhone(request.getPhone());
         student.setAddress(request.getAddress());
         student.setStatus(Status.ACTIVE);
-        student.setClassID(request.getClassID());
+        student.setClassroomId(request.getClassID());
 
 
         Student savedStudent = studentRepository.save(student);
@@ -58,7 +57,7 @@ public class StudentServiceImpl implements StudentService {
         student.setEmail(request.getEmail());
         student.setPhone(request.getPhone());
         student.setAddress(request.getAddress());
-        student.setClassID(request.getClassID());
+        student.setClassroomId(request.getClassID());
 
         Student updatedStudent = studentRepository.save(student);
                 return mapToResponse(updatedStudent);
@@ -98,7 +97,7 @@ public class StudentServiceImpl implements StudentService {
                 .status(student.getStatus())
                 .createdAt(student.getCreatedAt())
                 .updatedAt(student.getUpdatedAt())
-                .classID(student.getClassID())
+                .classID(student.getClassroomId())
                 .build();
     }
 

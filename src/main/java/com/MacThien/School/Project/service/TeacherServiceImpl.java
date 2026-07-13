@@ -5,7 +5,7 @@ import com.MacThien.School.Project.dto.TeacherRequest;
 import com.MacThien.School.Project.dto.TeacherResponse;
 import com.MacThien.School.Project.entity.Teacher;
 import com.MacThien.School.Project.enums.Status;
-import com.MacThien.School.Project.repository.TeacherRespository;
+import com.MacThien.School.Project.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class TeacherServiceImpl implements TeacherService {
-    private final TeacherRespository teacherRespository;
+    private final TeacherRepository teacherRespository;
 
     @Override
     public TeacherResponse createTeacher(TeacherRequest request) {

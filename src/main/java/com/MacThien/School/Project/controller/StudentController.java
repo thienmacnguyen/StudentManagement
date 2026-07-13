@@ -30,10 +30,12 @@ public class StudentController {
     ) {
         return ResponseEntity.ok(studentService.updateStudent(id, request));
     }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteStudent(@PathVariable Long id) {
+    @DeleteMapping
+    public ResponseEntity<String> deleteStudent(
+            @RequestParam (required = true) Long id
+    ) {
         studentService.softDeleteStudent(id);
-        return ResponseEntity.ok("Xóa mềm học sinh thành công");
+        return ResponseEntity.ok("Xóa học sinh thành công");
     }
 
     @GetMapping("/{id}")

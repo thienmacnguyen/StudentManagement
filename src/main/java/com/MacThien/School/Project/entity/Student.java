@@ -56,6 +56,6 @@ public class Student {
     private LocalDateTime updatedAt;
 
     @Column(name = "class_id")
-    private Long classID;
+    private Long classroomId;
 }
 

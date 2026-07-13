@@ -1,6 +1,5 @@
 package com.MacThien.School.Project.dto;
 
-import com.MacThien.School.Project.enums.Status;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -16,6 +15,4 @@ public class ClassroomRequest {
     private Integer numberOfDesks;
 
     private Long homeroomTeacherId;
-
-    private Status status;
 }

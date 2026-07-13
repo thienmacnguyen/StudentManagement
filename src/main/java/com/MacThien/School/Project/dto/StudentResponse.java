@@ -11,9 +11,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class StudentResponse {
     private Long id;
     private String studentCode;

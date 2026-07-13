@@ -1,7 +1,5 @@
 package com.MacThien.School.Project.repository;
 
-import com.MacThien.School.Project.dto.TeacherResponse;
-import com.MacThien.School.Project.entity.Student;
 import com.MacThien.School.Project.entity.Teacher;
 import com.MacThien.School.Project.enums.Status;
 import org.springframework.data.domain.Page;
@@ -14,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface TeacherRespository extends JpaRepository<Teacher, Long> {
+public interface TeacherRepository extends JpaRepository<Teacher, Long> {
     Optional<Teacher> findByTeacherCode(String teacherCode);
     boolean existsByTeacherCode(String teacherCode);
     boolean existsByEmail(String email);
