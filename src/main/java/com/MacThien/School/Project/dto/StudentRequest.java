@@ -9,9 +9,6 @@ import java.time.LocalDate;
 @Data
 public class    StudentRequest {
     public String getSortBy;
-    @NotBlank(message = "Mã sinh viên không được để trống")
-    @Size(max = 50, message = "Mã sinh viên không được dài quá 50 kỹ tự")
-    private String studentCode;
 
     @NotBlank(message = "Họ tên không được để trống")
     @Size(max = 100, message = "Họ tên không được dài quá 100 ký tự")

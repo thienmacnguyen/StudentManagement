@@ -10,9 +10,6 @@ import lombok.Data;
 
 @Data
 public class TeacherRequest {
-    @NotBlank(message = "Mã giáo viên không được để trống")
-    @Size(max = 50, message = "Mã giáo viên không được dài quá 50 ký tự")
-    private String teacherCode;
 
     @NotBlank(message = "Họ tên không được để trống")
     @Size(max = 50, message = "Họ tên không được dài quá 50 kí tự")

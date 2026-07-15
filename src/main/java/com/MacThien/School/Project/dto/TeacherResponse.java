@@ -2,10 +2,7 @@ package com.MacThien.School.Project.dto;
 import com.MacThien.School.Project.enums.Degree;
 import com.MacThien.School.Project.enums.Department;
 import com.MacThien.School.Project.enums.Status;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -13,6 +10,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
 public class TeacherResponse {
     private Long id;
     private String teacherCode;

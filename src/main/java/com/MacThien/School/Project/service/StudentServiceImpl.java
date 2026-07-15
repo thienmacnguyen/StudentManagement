@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
@@ -19,14 +21,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentResponse createStudent(StudentRequest request) {
-        if (studentRepository.existsByStudentCode(request.getStudentCode())) {
-            throw new RuntimeException("Mã sinh viên đã tồn tại");
-        }
         if (studentRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email đã được sử dụng");
         }
         Student student = new Student();
-        student.setStudentCode(request.getStudentCode());
+        //student.setStudentCode(request.getStudentCode());
         student.setFullName(request.getFullName());
         student.setGender(request.getGender());
         student.setBirthday(request.getBirthday());
@@ -35,8 +34,7 @@ public class StudentServiceImpl implements StudentService {
         student.setAddress(request.getAddress());
         student.setStatus(Status.ACTIVE);
         student.setClassroomId(request.getClassID());
-
-
+        student.setStudentCode(UUID.randomUUID().toString());
         Student savedStudent = studentRepository.save(student);
         return mapToResponse(savedStudent);
     }
@@ -46,8 +44,9 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy id" + id));
 
-        if (studentRepository.existsByEmailAndIdNot(request.getEmail(), id)) {
-            throw new RuntimeException("Email đã được dùng bởi sinh viên khác");
+        if (studentRepository.existsByEmailAndIdNotAndStatus(request.getEmail(), id, Status.ACTIVE)) {
+
+            throw new RuntimeException("Email đã được sử dụng");
         }
 
         // .student.setStudentCode(getStudentCode());

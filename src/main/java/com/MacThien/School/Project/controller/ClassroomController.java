@@ -36,7 +36,7 @@ public class ClassroomController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteClassroom(@PathVariable Long id) {
         classroomService.deleteClassroom(id);
-        return ResponseEntity.ok("Xóa cứng lớp học thành công vĩnh viễn!");
+        return ResponseEntity.ok("Xóa lớp học thành công vĩnh viễn!");
     }
 
     @GetMapping("/{id}")
@@ -56,7 +56,7 @@ public class ClassroomController {
     public ResponseEntity<List<StudentResponse>> addStudentToClass(
             @Valid @RequestBody AddStudentToClassRequest request
     ) {
-        classroomService.addStudentToClass(request);
-        return ResponseEntity.ok(classroomService.addStudentToClass(request));
+        List<StudentResponse> addStudents = classroomService.addStudentToClass(request);
+        return ResponseEntity.ok(addStudents);
     }
 }

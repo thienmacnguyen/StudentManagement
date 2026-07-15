@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class TeacherServiceImpl implements TeacherService {
@@ -18,21 +20,18 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public TeacherResponse createTeacher(TeacherRequest request) {
-        if (teacherRespository.existsByTeacherCode(request.getTeacherCode())) {
-            throw new RuntimeException("Mã giáo viên đã tồn tại");
-        }
         if (teacherRespository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email đã tồn tại");
         }
         Teacher teacher = new Teacher();
-        teacher.setTeacherCode(request.getTeacherCode());
+        //teacher.setTeacherCode(request.getTeacherCode());
         teacher.setFullName(request.getFullName());
         teacher.setEmail(request.getEmail());
         teacher.setPhone(request.getPhone());
         teacher.setDegree(request.getDegree());
         teacher.setDepartment(request.getDepartment());
         teacher.setStatus(Status.ACTIVE);
-
+        teacher.setTeacherCode(UUID.randomUUID().toString());
         Teacher savedTeacher = teacherRespository.save(teacher);
         return mapToResponse(savedTeacher);
     }
@@ -41,10 +40,11 @@ public class TeacherServiceImpl implements TeacherService {
     public TeacherResponse updateTeacher(Long id, TeacherRequest request) {
         Teacher teacher = teacherRespository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy id" + id));
-        if (teacherRespository.existsByEmailAndIdNot(request.getEmail(), id)) {
+        if (teacherRespository.existsByEmailAndIdNotAndStatus(request.getEmail(), id, Status.ACTIVE)) {
+
             throw new RuntimeException("Email đã được sử dụng");
         }
-        teacher.setTeacherCode(request.getTeacherCode());
+        //teacher.setTeacherCode(request.getTeacherCode());
         teacher.setFullName(request.getFullName());
         teacher.setEmail(request.getEmail());
         teacher.setPhone(request.getPhone());
@@ -78,10 +78,12 @@ public class TeacherServiceImpl implements TeacherService {
     public TeacherResponse mapToResponse(Teacher teacher) {
         TeacherResponse response = new TeacherResponse();
         response.setId(teacher.getId());
+        response.setTeacherCode(teacher.getTeacherCode());
         response.setFullName(teacher.getFullName());
         response.setEmail(teacher.getEmail());
         response.setPhone(teacher.getPhone());
         response.setDegree(teacher.getDegree());
+        response.setStatus(teacher.getStatus());
         response.setDepartment(teacher.getDepartment());
         response.setCreatedAt(teacher.getCreatedAt());
         response.setUpdatedAt(teacher.getUpdatedAt());

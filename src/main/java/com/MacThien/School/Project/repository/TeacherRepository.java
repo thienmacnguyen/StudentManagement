@@ -16,7 +16,7 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long> {
     Optional<Teacher> findByTeacherCode(String teacherCode);
     boolean existsByTeacherCode(String teacherCode);
     boolean existsByEmail(String email);
-    boolean existsByEmailAndIdNot(String email, Long id);
+    boolean existsByEmailAndIdNotAndStatus(String email, Long id, Status status);
     @Query("SELECT t FROM Teacher t WHERE" +
             "(:keyword IS NULL OR :keyword = '' OR LOWER(t.teacherCode) LIKE(CONCAT('%',:keyword,'%')) " +
             "OR :keyword = '' OR LOWER(t.fullName) LIKE(CONCAT('%',:keyword,'%')) " +

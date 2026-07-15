@@ -17,7 +17,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     List<Student> findByClassroomId(Long classId);
     boolean existsByStudentCode(String studentCode);
     boolean existsByEmail(String email);
-    boolean existsByEmailAndIdNot(String email, Long id);
+    boolean existsByEmailAndIdNotAndStatus(String email, Long id, Status status);
     // Dùng Custom Query để tìm kiếm tương đối (LIKE) và lọc theo trạng thái
     @Query("SELECT s FROM Student s WHERE " +
             "(:keyword IS NULL OR :keyword = '' OR LOWER(s.studentCode) LIKE LOWER(CONCAT('%', :keyword, '%')) " +

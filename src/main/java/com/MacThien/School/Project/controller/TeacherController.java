@@ -33,7 +33,7 @@ public class TeacherController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> softDeleteTeacher(@PathVariable Long id) {
         teacherService.softDeleteTeacher(id);
-        return ResponseEntity.ok("Xóa mềm giáo viên thành công");
+        return ResponseEntity.ok("Xóa giáo viên thành công");
     }
 
     @GetMapping("/{id}")
